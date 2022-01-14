@@ -97,7 +97,7 @@ def show(n):
     if(n>1):
         show(n-1)
 
-def poly_div(a,b): #a/b, funktioniert nur, wenn b teilt a
+def poly_div(a,b):                      # teilt Polynom a durch Polynom b; funktioniert nur, wenn b|a
     c=a[-1]//b[-1]
     for i in range(len(b)):
         a[-i-1]-=c*b[-i-1]
@@ -110,8 +110,8 @@ def poly_div(a,b): #a/b, funktioniert nur, wenn b teilt a
     return [c]
 
 cyclopolys=[[-1,1]]
-def poly_cyc(n): #generates all the cyclotomic polys up to n and stores them in cyclopolys, but inefficiently
-    for i in range(2,n+1): # for greater efficiency (not necessary), use the lemmas from IMO Suisse\ROI
+def poly_cyc(n):                        # erzeugt die ersten n Kreisteilungspolynome
+    for i in range(2,n+1):
         poly=[-1]+(i-1)*[0]+[1]
         for j in range(1,i):
             if(i%j==0):
@@ -119,9 +119,8 @@ def poly_cyc(n): #generates all the cyclotomic polys up to n and stores them in 
         cyclopolys.append(poly)
 
 poly_cyc(80)
-#print(cyclopolys)
 
-def add(f,g): #adds two factorizations, but they have to be in ascending order, result is also ascending
+def add(f,g):                           # addiert zwei Faktorisierungen
     result=[]
     i,j=1,1
     while(i<=len(f) and j<=len(g)):
@@ -172,25 +171,3 @@ def factor_trick17(n,mod):
     return factorization
 
 show(40)
-
-# at this point, the one remaining are mostly the one with high v5
-# so, I should use the fact it is a Fermat prime and things
-# lets stay at 10**24
-# and say v2=k. Then you need to cancel k-1 fives
-# ok, so this can only be cancelled by primes 1 mod 5
-# then by LTE, it is like v5(exponent+1)
-# since 11**24 is way to large, we only look at **4 (since **14 yields the same)
-# (11*31*41*61*71)**4 is larger than 10**31
-# ok, and it generates five fives, ok so v5<6, so v5<=4
-# even if 11**24 fits, it is obvious that new such factors are better
-# what is (11*31*41*61*71*101*131)**4=4,2*10**47!!! that's the goal
-# let say all below that number, ok, then v5<=6
-# next one is (11*31*41*61*71*101*131*151*181)**4, which is about 2,29*10^65
-# effiziente fakotiriserung: https://github.com/nishanth17/factor
-# however, !!! you have to correct the bugs (see github issues)
-# and also apparently bc of Miller Rabin check if the primes
-# are indeed primes on http://compoasso.free.fr/primelistweb/page/prime/liste_online_en.php
-
-# lol, next one is (11*31*41*61*71*101*131*151*181*191*211)**4, about 6,06*10^83
-# lol, next one is (11*31*41*61*71*101*131*151*181*191*211*241*251)**4, larger than 10^102
-# next one is (...*271*281)**4, larger than 10^122
